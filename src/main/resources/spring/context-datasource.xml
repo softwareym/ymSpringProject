@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+                           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd">
+
+    <!-- Connection Pool을 구현하기 위한 스펙을 정해놓은 인터페이스. DB와의 연동을 위해 사용되는 객체이고 이것을 Spring에서 사용하기 위해서 설정 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        <property name="url" value="jdbc:sqlserver://1.1.1.13;DatabaseName=ym1" />
+        <property name="username" value="1"/>
+        <property name="password" value="1"/>
+    </bean>
+
+    <bean id="dataSource2" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        <property name="url" value="jdbc:sqlserver://1.1.1.2;DatabaseName=ym2" />
+        <property name="username" value="2"/>
+        <property name="password" value="2"/>
+    </bean>
+
+    <!-- <bean id="dataSourceLog" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+         <constructor-arg ref="dataSource" />
+         <property name="logFormatter"
+             <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+                 <property name="loggingType" value="MULTI_LINE" />
+                 <property name="sqlPrefix" value="SQL         :  "/>
+             </bean>
+         </property>
+     </bean>-->
+
+</beans>
