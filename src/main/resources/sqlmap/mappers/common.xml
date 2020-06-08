@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="common">
+
+	<!-- 500 에러 로그 기록 -->
+	<insert id="insert500ErrLog" parameterType="java.util.HashMap">
+		INSERT INTO tblServiceErrorLog
+		(
+			enum
+			,eserverip
+			,edomain
+			,eclientip
+			,ekind
+			,ecookie
+			,emsg
+			,epdata
+			,epdataPost
+			,epdataRefer
+			,ebrowser
+			,econfirm
+			,regdate
+		)
+		VALUES
+		(
+			 #{err_num, mode=IN}
+			,#{server_ip, mode=IN}
+			,#{domain, mode=IN}
+			,#{user_ip, mode=IN}
+			,#{kind, mode=IN}
+			,#{cookies, mode=IN}
+			,#{msg, mode=IN}
+			,#{err_url, mode=IN}
+			,#{data_post, mode=IN}
+			,#{referer, mode=IN}
+			,#{user_agent, mode=IN}
+			,0
+			,getdate()
+		)
+	</insert>
+
+	<!-- 404 에러 로그 기록 -->
+	<insert id="insert404ErrLog" parameterType="java.util.HashMap" >
+		INSERT INTO tblServiceErrorLog_404
+		(
+			enum
+			,eserverip
+			,edomain
+			,eclientip
+			,ekind
+			,ecookie
+			,emsg
+			,epdata
+			,epdataPost
+			,epdataRefer
+			,ebrowser
+			,econfirm
+			,regdate
+		)
+		VALUES
+		(
+			 #{err_num, mode=IN}
+			,#{server_ip, mode=IN}
+			,#{domain, mode=IN}
+			,#{user_ip, mode=IN}
+			,#{kind, mode=IN}
+			,#{cookies, mode=IN}
+			,#{msg, mode=IN}
+			,#{err_url, mode=IN}
+			,#{data_post, mode=IN}
+			,#{referer, mode=IN}
+			,#{user_agent, mode=IN}
+			,0
+			,getdate()
+		)
+
+	</insert>
+
+	<!--파일 삭제 대상 리스트 조회-->
+	<select id="selectdelList" statementType="CALLABLE" resultType="java.util.HashMap">
+		SELECT
+		,replace(FileUrl, 'http://','https://') as imgFolderPath
+		,right(FileUrl, CHARINDEX('/', reverse(FileUrl))-1) as imgFileName
+		,regDate
+		FROM tblFiledata WITH (NOLOCK)
+		WHERE
+		and seq not in (select delSeq from [tblFtpDelLog] with(nolock))
+		order by regdate desc
+	</select>
+
+</mapper>

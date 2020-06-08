@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--  mapper-config.xml을 만드는 이유는 com.class.www.purchase.vo.BasketVO처럼 패키지 명과 그 안의 클래스 명이 너무 길어지는 경우가 많은데, 그것을 basketVO 줄여 사용하기 위한 것들을 정의 -->
+<configuration>
+    <typeAliases>
+        <typeAlias alias="loginVO" type="ym.project.login.vo.LoginVO"/>
+    </typeAliases>
+</configuration>

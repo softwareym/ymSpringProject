@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <!-- mybatis를 사용하여 데이터베이스에 쉽게 접근하기 위함
+     sqlSession이란 sql문을 실제로 호출해주는 객체로 sqlSession 객체를 이용하여 우리가 정의한 sql문으로 접근할 수 있습니다.
+     sqlSessionFactory란 sqlSession을 만드는 역할 -->
+
+    <!-- SqlSession setup for MyBatis Database Layer -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:/sqlmap/mapper-config.xml" />
+        <property name="mapperLocations" value="classpath:/sqlmap/mappers/*.xml" />
+    </bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"  destroy-method="clearCache">
+        <constructor-arg ref="sqlSessionFactory" />
+    </bean>
+
+    <bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource2" />
+        <property name="configLocation" value="classpath:/sqlmap/mapper-config.xml" />
+        <property name="mapperLocations" value="classpath:/sqlmap/mappers/*.xml" />
+    </bean>
+    <bean id="sqlSession2" class="org.mybatis.spring.SqlSessionTemplate"  destroy-method="clearCache">
+        <constructor-arg ref="sqlSessionFactory2" />
+    </bean>
+
+</beans>

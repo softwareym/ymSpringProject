@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd" >
+
+    <!--
+       transaction을 보면 controller에서는 적용이 되지 않지만 service에서 적용이 된다.
+       transaction은 root application context(context-*.xml)에서 생성되므로 controller 아래 서비스 부분들은 root application context(context-*.xml)에서 bean으로 생성이 되어야한다.
+       그러므로 이부분을 명확하게 나눠주는 작업(context-transaction.xml 참고)이 필요하고 이전에 아래와 같이 component-scan을 명확하게 해주는 작업을 해줘야 한다.
+    -->
+    <!--기본 패키지에서 @Conponent, @Service, @Repository와 같은 스트레오애노테이션을 제외하고(use-default-filters="false") @Controller로 표현된 클래스만 빈으로 등록하겠다.는 의미-->
+    <context:component-scan base-package="ym.project.*" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+
+
+    <!-- rest full 사용 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+       <!-- <property value="true" name="alwaysUseFullPath"></property>-->
+    </bean>
+    <!-- rest full 사용 -->
+
+    <!-- objectMapper는 뷰 이름으로부터 사용할 View Object를 맵핑해준다. 여기서는 /WEB-INF/views/ 폴더의 .jsp로 끝나는 파일들을 찾아서 매핑 -->
+    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean" />
+    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="order" value="1"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 500 에러 처리-->
+    <bean name="exceptionResolver" class="ym.project.cmmn.web.CommonExceptionResolver" />
+
+    <!--인터셉터-->
+    <mvc:interceptors>
+<!--        <bean class="ym.project.cmmn.web.CommonInterceptor"></bean>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="ym.project.cmmn.web.CommonInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--@ResponseBody를 사용하여 JSON형태로 응답하기-->
+    <mvc:annotation-driven/>
+
+    <!-- json - ajax -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
+    <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" id="jsonView">
+        <property name="contentType" value="application/json; charset=UTF-8" />
+    </bean>
+
+</beans>

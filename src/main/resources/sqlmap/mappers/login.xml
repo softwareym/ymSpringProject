@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="login">
+
+    <!-- 사용자 정보 조회 -->
+    <select id="selectMemberInfo" statementType="CALLABLE" resultType="java.util.HashMap">
+		SELECT username, gbn, userid, passwd FROM tblUserMember WITH(nolock)
+		WHERE userid = #{userid, mode=IN}
+	</select>
+
+	<!-- 접속 로그 기록 -->
+	<insert id="insertAccLog" >
+		INSERT INTO tblaccLog (
+		  userid
+		  ,ip
+		  ,url
+		  ,userAgent
+		  ,state
+		  ,regdate
+		)
+		values(
+   		  #{userid, mode=IN}
+ 		  ,#{ip, mode=IN}
+		  ,#{url, mode=IN}
+		  ,#{userAgent, mode=IN}
+		  ,#{state, mode=IN}
+  		  ,getdate()
+		)
+	</insert>
+
+	<!--사용자 정보 등록-->
+	<insert id="insertUserMember" >
+		INSERT INTO tblUserMember
+		(
+			gbn
+			,userid
+			,username
+			,passwd
+			,email
+			,usersex
+			,birthdate
+			,zipcode
+			,addr1
+			,addr2
+			,homephone
+			,cellphone
+			,joindate
+			,memberState
+			,chk_infomail
+			,chk_sms
+			,LoginAuthKey
+			,authDate
+			,ValidYear)
+		VALUES
+		(
+			#{gbn, mode=IN}
+		   ,#{userid, mode=IN}
+		   ,#{username, mode=IN}
+		   ,#{passwd, mode=IN}
+		   ,#{email, mode=IN}
+		   ,#{usersex, mode=IN}
+		   ,#{birthdate, mode=IN}
+		   ,#{zipcode, mode=IN}
+		   ,#{addr1, mode=IN}
+		   ,#{addr2, mode=IN}
+		   ,#{homephone, mode=IN}
+		   ,#{cellphone, mode=IN}
+		   ,#{joindate, mode=IN}
+		   ,#{memberState, mode=IN}
+		   ,#{chk_infomail, mode=IN}
+		   ,#{chk_sms, mode=IN}
+		   ,#{LoginAuthKey, mode=IN}
+		   ,#{authDate, mode=IN}
+		   ,#{ValidYear, mode=IN}
+		)
+	</insert>
+
+
+</mapper>
