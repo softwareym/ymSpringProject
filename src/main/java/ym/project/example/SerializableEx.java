@@ -10,8 +10,15 @@ import java.util.Base64;
  *
  * 역직렬화(Deserialization) : 스트림으로부터 데이터를 읽어서 객체를 만드는 것.
  * 직렬화할 클래스에 Serializable 인터페이스를 사용
+ *
+ * JVM의 메모리에서 상주하는 객체 데이터를 그대로 영속화(Persistence)할 때 사용된다.
+ * 시스템이 종료되더라도 사라지지 않으며, 영속화된 데이터이기 때문에 네트워크로 전송도 가능하다.
+ *
+ * JVM 힙 영역에 존재하는 객체를 한 줄로 늘어선 바이트의 형태로 만드는 것을 객체의 직렬화라고 하고, 객체의 형태로 복원하는 작업을 역직렬화라고 한다.
+ * Serializable은 객체직렬화를 위한 인터페이스인데 메소드 구현이 필요없는 인터페이스이고 구현을 내부적으로 자바가 해줍니다.
+ * java.io.Serializabe 인터페이스를 보면 구현해야 하는 메소드가 없다. 그 이유는 Serializable 인터페이스를 구현한 구현체가 직렬화 대상이다라는 것을 JVM에게 알려주는 역할만을 하기 때문이다.
  */
-class Member implements Serializable {
+class Member /*implements Serializable*/ {
 
     //직렬화된 객체를 역직렬화할 때 서로 같은 클래스를 사용해야 하는데, 클래스의 이름이 같더라도 클래스의 내용이 변경된 경우 역직렬화가 실패하며 에러가 발생한다.
     private static final long serialVersionUID = 4220461820168818967L;
