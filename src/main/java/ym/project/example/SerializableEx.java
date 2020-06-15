@@ -98,6 +98,10 @@ public class SerializableEx {
 
     }
 
+    /**
+     * ObjectInputStream : 역직렬화 보조스트림, 혼자 사용 불가
+     * @param serializedString
+     */
     public static void deserializable(String serializedString){
         byte[] serializedMember = Base64.getDecoder().decode(serializedString);
 
