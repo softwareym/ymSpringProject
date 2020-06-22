@@ -52,21 +52,6 @@ class Student implements Comparable<Student>{
     }
 }
 
-class Student2 {
-    String name;
-    int id;
-    double score;
-
-    public Student2(String name, int id, double score) {
-        this.name = name;
-        this.id = id;
-        this.score = score;
-    }
-
-    public String toString() {
-        return "Student2{" + "name='" + name + '\'' + ", id=" + id + ", score=" + score + '}';
-    }
-}
 public class SortEx {
 
     public static void main(String args[]){
