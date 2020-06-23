@@ -8,10 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ym.project.cmmn.web.CommonExceptionResolver;
 import ym.project.common.service.CommonService;
-import ym.project.login.service.LoginService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -263,5 +261,11 @@ public class CommonController {
 			e.getStackTrace();
 		}
 	}
+
+    @RequestMapping("/javascriptEx.do")
+    public String javascriptEx(Model model, @RequestParam HashMap<String, Object> pParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        return "common/javascriptEx";
+    }
 
 }
