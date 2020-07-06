@@ -248,7 +248,7 @@ public class CommonController {
 				for (int i = 0; i < folder_list.length; i++) {
 					if(folder_list[i].isFile()) {
 						folder_list[i].delete();
-						System.out.println("파일이 삭제되었습니다.");
+						System.out.println("파일이 삭제되었습니다.");//
 					}else {
                         deleteFtpFolder(folder_list[i].getPath()); //재귀함수호출
 						System.out.println("폴더가 삭제되었습니다.");
