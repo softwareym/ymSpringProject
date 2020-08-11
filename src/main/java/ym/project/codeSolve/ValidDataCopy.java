@@ -3,18 +3,17 @@ package ym.project.codeSolve;
 import java.util.ArrayList;
 import java.util.List;
 
-/*public class ValidDataCopy {
+public class ValidDataCopy {
 
     public static final int ARR_SIZE = 8;
 
     public static void main(String[] args){
-*//*
+/*
         4; 1 30 0 6 0 2 1 3
         0; 0 2 0 4 1 3 0 0
-*//*
+*/
         int pointer = 4;
         int[] arr = {1,30,0,6,0,2,1,3};
-
         solution(pointer, arr);
     }
 
@@ -22,7 +21,7 @@ import java.util.List;
         String answer = null;
         //0 + 포인터 / 1 + 유효값
         //유효한 값이 나올때까지 반복[1이 나오면 반복문 종료]
-
+        //1이 나오는 인덱스 값의 전 인덱스에 대한 값이 현재 인덱스 값이 됨
        ArrayList<Integer> arrList = new ArrayList<>(ARR_SIZE);
        ArrayList<Integer> answerList = new ArrayList<>(ARR_SIZE);
 
@@ -61,10 +60,12 @@ import java.util.List;
                }
            }
        }
-        return answer;
-    }
-}*/
 
+       System.out.println(answerList.toString());
+       return answerList.toString();
+    }
+}
+/*
 public class ValidDataCopy {
     public static final int POINT_SIZE = 8 ;
 
@@ -77,10 +78,6 @@ public class ValidDataCopy {
         String[] temp = S.split(";");
         int start = Integer.parseInt(temp[0]);
         int size = POINT_SIZE;
-
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
 
         String[] standardString = temp[1].split(" ");
         int[] standardInt =  new int[size];
@@ -111,7 +108,6 @@ public class ValidDataCopy {
         }
 
         System.out.println(sb.toString());
-
-
     }
 }
+*/
