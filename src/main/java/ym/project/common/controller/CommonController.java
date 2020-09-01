@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ym.project.cmmn.web.CommonExceptionResolver;
+import ym.project.common.Level;
 import ym.project.common.service.CommonService;
 
 import javax.servlet.http.Cookie;
@@ -23,6 +24,7 @@ import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -266,6 +268,56 @@ public class CommonController {
     public String javascriptEx(Model model, @RequestParam HashMap<String, Object> pParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         return "common/javascriptEx";
+    }
+
+
+    /**
+     * enum 이용한 리팩토링
+     * @param model
+     * @param pParam
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/enumData.do")
+    public String getEnumData(Model model, @RequestParam HashMap<String, Object> pParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        HashMap<String, Object> param = new HashMap<String, Object>();
+        String[] arrTitle1;
+        String[] arrTitleDetail1;
+
+        String[] arrTitle2;
+        String[] arrTitleDetail2;
+
+        // enum 이용한 리팩토링
+        /*
+         * level 별로 처리하여 세팅하는 값을 클래스로 분류하여 값 세팅
+         * 하드코딩 된 값은 다른곳 에서 사용할 수 있으면
+         * 하나의 클래스에서 관리하고 가독성있는 명으로 관리하자
+         *
+         */
+        Level levelInfo = Level.findBy(1);
+        arrTitle1 = levelInfo.getArrTitle();
+        arrTitleDetail1 = levelInfo.getArrTitleDetail();
+
+        model.addAttribute("arrTitle1", Arrays.toString(arrTitle1));
+        model.addAttribute("arrTitleDetail1", Arrays.toString(arrTitleDetail1));
+
+        Level levelInfo2 = Level.findBy(2);
+        arrTitle2 = levelInfo2.getArrTitle();
+        arrTitleDetail2 = levelInfo2.getArrTitleDetail();
+
+        model.addAttribute("arrTitle2", Arrays.toString(arrTitle2));
+        model.addAttribute("arrTitleDetail2", Arrays.toString(arrTitleDetail2));
+
+        //지정 값이 없을 경우
+        Level levelInfo3 = Level.findBy(3);
+        model.addAttribute("levelInfo3", levelInfo3);
+        model.addAttribute("levelValue", levelInfo3.getLevelValue());
+
+
+        return "common/enumData";
     }
 
 }

@@ -8,7 +8,7 @@
     <url>http://maven.apache.org</url>
 
     <groupId>Spring</groupId>
-    <artifactId>Test</artifactId>
+    <artifactId>ymSpringProject</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
